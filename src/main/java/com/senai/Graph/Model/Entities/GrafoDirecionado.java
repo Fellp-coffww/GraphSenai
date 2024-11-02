@@ -1,10 +1,16 @@
-package com.senai.Tree.Model;
+package com.senai.Graph.Model.Entities;
+
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-class GrafoDirecionado {
+@Getter
+@Setter
+
+public class GrafoDirecionado {
     private final int vertices;
     private final List<List<Integer>> arestas;
 
@@ -33,7 +39,6 @@ class GrafoDirecionado {
             System.out.println();
         }
     }
-
 
 	public static void main(String[] args) {
 	    Scanner scanner = new Scanner(System.in);

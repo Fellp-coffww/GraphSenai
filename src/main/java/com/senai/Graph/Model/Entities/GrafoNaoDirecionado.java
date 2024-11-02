@@ -1,5 +1,10 @@
-package com.senai.Tree.Model;
+package com.senai.Graph.Model.Entities;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class GrafoNaoDirecionado {
     private int[][] matrizAdjacencia;
     private int numVertices;
@@ -13,7 +18,7 @@ public class GrafoNaoDirecionado {
     // Método para adicionar uma aresta entre dois vértices
     public void adicionarAresta(int origem, int destino) {
         matrizAdjacencia[origem][destino] = 1;
-        matrizAdjacencia[destino][origem] = 1; // Aresta para grafo não direcionado
+        //matrizAdjacencia[destino][origem] = 1; // Aresta para grafo não direcionado
     }
 
     // Método para exibir a matriz de adjacências
