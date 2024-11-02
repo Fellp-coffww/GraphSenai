@@ -1,4 +1,4 @@
-package com.senai.Tree;
+package com.senai.Graph;
 
 import com.sun.faces.config.ConfigureListener;
 import com.sun.faces.config.FacesInitializer;
@@ -24,8 +24,6 @@ public class TreeApplication implements ServletContextInitializer {
 	public static void main(String[] args)  {
 
 		SpringApplication.run(TreeApplication.class, args);
-
-
 
 	}
 
