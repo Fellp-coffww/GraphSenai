@@ -135,31 +135,80 @@
         Aplicação de Grafos - Estrutura de dados 2 - JF Dynamics
     </div>
 
-    <!-- Cartão com informações da árvore -->
-    <p:card class="ui-card" style="width: 30rem; margin: 20px auto;">
+    <!-- Cartão com informações do grafo -->
+    <p:card class="ui-card" style="width: 20rem; margin: 20px auto;">
         <f:facet name="title">
             <h3>Grafos</h3>
         </f:facet>
+        <div style="display: flex; justify-content: center;">
         <p> Clique para começar: #{TreeView.treeSize}</p>
+    </div>
+    <div style="display: flex; justify-content: center;">
         <p:commandButton value="Novo Grafo" type="button" icon="pi pi-plus" onclick="PF('dlg').show()"/>
-
-        <p:dialog header=" " widgetVar="dlg" minHeight="50" width="350" showEffect="fade" modal="true">
+    </div>
+    <!-- Popup de novo grafo -->
+        <p:dialog header="Novo Grafo" widgetVar="dlg" minHeight="50" width="350" showEffect="fade" modal="true">
             <div style="height: 300px">
-                <h3>Novo Grafo</h3>
+                      <h5 class="mt-0"></h5>
+                    <h:panelGrid columns="3" cellpadding="7">
+                    <p:outputLabel for="name" value="Número de vertices"/>
+                     <p:inputText id="name" value="#{basicView.text1}"/>
+                    <h:outputText id="display" value="#{basicView.text1}"/>
+                    </h:panelGrid>
+                    
+                    <h5 class="mt-0"></h5>
+                    <p:selectBooleanCheckbox value="#{selectBooleanView.value1}" itemLabel="Direcionado"/>
             </div>
-            <f:facet name="footer">
-                <p:commandButton type="button" value="Sair" style="width: 5rem" onclick="PF('dlg').hide()"/>
-            </f:facet>
+
+            <div style="display: flex; justify-content: center;">
+                <p:commandButton type="button" value="Criar" icon="pi pi-check" iconPos="right" />
+            </div>
         </p:dialog>
     </p:card>
+
+<!-- Popup de lista de vertices -->
+<div style="display: flex; justify-content: flex-end; margin-right: 1300px;">
+    <p:commandButton value="Lista vertices" type="button" onclick="PF('vtc').show()"/>
+</div>
+    <p:dialog header="Lista vertices" widgetVar="vtc" minHeight="50" width="350" showEffect="fade" modal="true">
+        <div style="height: 250px"> 
+                <h5 class="mt-0"></h5>
+                <h:outputLabel for="btnSelect" value="Lista vertices:"/>
+            <p:selectOneMenu id="btnSelect" value="#{defaultCommandView.btn}" onchange="$('#form').submit()">
+                <f:selectItems value="#{defaultCommandView.buttons}"/>
+            </p:selectOneMenu>
+                
+        </div>
+
+        <div style="display: flex; justify-content: center;">
+            <p:commandButton type="button" value="Salvar" icon="pi pi-check" iconPos="right" />
+        </div>
+    </p:dialog>
+
+
+    <!-- Popup de adicionar arestas -->
+    <div style="display: flex; justify-content: flex-end; margin-right: 1300px; margin-top: 50px;">
+        <p:commandButton value="Adicionar arestas" type="button" onclick="PF('cnx').show()"/>
+    </div>
+        <p:dialog header="variavel nome vertice" widgetVar="cnx" minHeight="50" width="350" showEffect="fade" modal="true">
+            <div style="height: 250px"> 
+                    <h5 class="mt-0"></h5>
+                    <div style="display: flex; justify-content: center; margin-top: 90px;">
+                    <p:commandButton type="button" value="Adicionar conexões" icon="pi pi-plus" iconPos="right" />
+                </div>
+            </div>
+
+        </p:dialog>
+    
 
     <!-- Conteúdo principal -->
     <div class="content">
         <h:form>
-            <!-- Diagrama da árvore -->
+            <!-- Diagrama do grafo -->
             <p:diagram value="#{TreeView.model}" style="height:800px" styleClass="ui-widget-content" />
 
         </h:form>
+        
     </div>
 </div>
 
