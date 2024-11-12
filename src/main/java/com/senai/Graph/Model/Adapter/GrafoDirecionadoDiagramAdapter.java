@@ -47,6 +47,7 @@ public class GrafoDirecionadoDiagramAdapter {
             for (List<Integer> list : gd.getArestas()){
 
                     for (Integer integer : list){
+
                         Connection connection = new Connection(model.getElements().get(loop).getEndPoints().get(0), model.getElements().get(integer).getEndPoints().get(1),connector);
                         connection.setConnector(new StraightConnector());
                         model.connect(connection);

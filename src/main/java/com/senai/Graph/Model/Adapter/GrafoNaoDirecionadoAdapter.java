@@ -1,14 +1,12 @@
 package com.senai.Graph.Model.Adapter;
 
 import com.senai.Graph.Model.Entities.GrafoNaoDirecionado;
-import org.primefaces.component.diagram.Diagram;
 import org.primefaces.model.diagram.Connection;
 import org.primefaces.model.diagram.DefaultDiagramModel;
 import org.primefaces.model.diagram.Element;
 import org.primefaces.model.diagram.connector.StraightConnector;
 import org.primefaces.model.diagram.endpoint.DotEndPoint;
 import org.primefaces.model.diagram.endpoint.EndPointAnchor;
-import org.primefaces.model.diagram.overlay.ArrowOverlay;
 
 import java.util.Random;
 

@@ -1,73 +1,78 @@
 package com.senai.Graph.View;
 
-import com.senai.Graph.Model.Adapter.GrafoDirecionadoComPesoAdapter;
+
 import com.senai.Graph.Model.Adapter.GrafoDirecionadoDiagramAdapter;
-import com.senai.Graph.Model.Adapter.GrafoNaoDirecionadoAdapter;
 import com.senai.Graph.Model.Entities.GrafoDirecionado;
-import com.senai.Graph.Model.Entities.GrafoNaoDirecionado;
-import com.senai.Graph.Model.Entities.Graph;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.primefaces.model.diagram.Connection;
+import org.primefaces.PrimeFaces;
 import org.primefaces.model.diagram.DefaultDiagramModel;
-import org.primefaces.model.diagram.DiagramModel;
 import org.primefaces.model.diagram.Element;
-import org.primefaces.model.diagram.connector.FlowChartConnector;
-import org.primefaces.model.diagram.connector.StraightConnector;
-import org.primefaces.model.diagram.endpoint.DotEndPoint;
-import org.primefaces.model.diagram.endpoint.EndPoint;
-import org.primefaces.model.diagram.endpoint.EndPointAnchor;
-import org.primefaces.model.diagram.overlay.ArrowOverlay;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Named("graphView")
-@ViewScoped
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ViewScoped
 public class GraphView implements Serializable {
 
+    private GrafoDirecionado grafoDirecionado;
     private DefaultDiagramModel model;
     private DefaultDiagramModel model1;
     private DefaultDiagramModel model2;
+    private Integer qtdVertices;
+    private Element verticeSelecionado;
+    private List<String> buttons;
+    private String verticeDestino;
+
 
     private boolean direcionado; // define o tipo do grafo
+    private boolean comPeso; // define o tipo do grafo
 
     @PostConstruct
     public void init() {
-
-        model = new DefaultDiagramModel();
-        model.setMaxConnections(-1); // número ilimitado de conexões
-
-
-        Graph graph = new Graph(4);
-        graph.addEdge(0,1, 10);
-        graph.addEdge(1,2, 30);
-        graph.addEdge(2,0,40);
-        model2 = GrafoDirecionadoComPesoAdapter.adapt(graph);
-
-        GrafoDirecionado grafo = new GrafoDirecionado(3);
-        grafo.adicionarAresta(0, 1);
-        grafo.adicionarAresta(1, 2);
-        grafo.adicionarAresta(2, 0);
-
-        model1 = GrafoDirecionadoDiagramAdapter.adapt(grafo);
-
-        GrafoNaoDirecionado grafoNaoDirecionado = new GrafoNaoDirecionado(4);
-        grafoNaoDirecionado.adicionarAresta(0, 1);
-        grafoNaoDirecionado.adicionarAresta(1, 2);
-        grafoNaoDirecionado.adicionarAresta(2, 1);
-
-        model = GrafoNaoDirecionadoAdapter.adapt(grafoNaoDirecionado);
-
+        qtdVertices = 0; // Inicializar o valor para evitar nulos, caso necessário
+        verticeSelecionado = new Element();
+        buttons = new ArrayList<>();
 
         }
+
+    public void actionBotaoNewGraph() {
+
+        grafoDirecionado = new GrafoDirecionado(qtdVertices);
+        model = GrafoDirecionadoDiagramAdapter.adapt(grafoDirecionado);
+        for (int i = 0; i < qtdVertices; i++) {
+            buttons.add(String.valueOf("V" + (i+1)));
+        }
+
+
+    }
+
+    public void selecionarVertice(Element vertice) {
+        this.verticeSelecionado = vertice;
+        PrimeFaces.current().executeScript("PF('vtc').show()");
+    }
+
+    public void addConnection() {
+
+            int oringemInt = Integer.parseInt(verticeSelecionado.getData().toString().replaceAll("V", ""))-1;
+            int destinoInt = Integer.parseInt(verticeDestino.replaceAll("V", ""))-1;
+            PrimeFaces.current().ajax().update(":form2:diagram"); // Atualiza o diagrama após a conexão
+            grafoDirecionado.adicionarAresta(oringemInt, destinoInt);
+            model = GrafoDirecionadoDiagramAdapter.adapt(grafoDirecionado);
+            System.out.println("Conexão adicionada entre " + verticeSelecionado.getData() + " e " + verticeDestino);
+
+    }
+
 
 }
