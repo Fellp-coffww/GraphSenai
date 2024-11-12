@@ -27,6 +27,7 @@ public class GrafoDirecionadoDiagramAdapter {
 
         DefaultDiagramModel model = new DefaultDiagramModel();
         model.getDefaultConnectionOverlays().add(new ArrowOverlay(20, 20, 1, 1)); // seta para grafos direcionados
+        model.setMaxConnections(-1);
 
         if(gd.getVertices() <  0){
             return null;

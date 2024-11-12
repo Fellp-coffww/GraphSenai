@@ -23,6 +23,7 @@ public class GrafoDirecionadoComPesoAdapter {
         DefaultDiagramModel model = new DefaultDiagramModel();
         Random random = new Random();
         model.getDefaultConnectionOverlays().add(new ArrowOverlay(20, 20, 1, 1));
+        model.setMaxConnections(-1);
 
         if(gd.getEdgesList().size() <  0){
             return null;
@@ -35,6 +36,10 @@ public class GrafoDirecionadoComPesoAdapter {
                 model.addElement(vertice);
                 vertice.addEndPoint(new DotEndPoint(EndPointAnchor.AUTO_DEFAULT));
                 vertice.addEndPoint(new DotEndPoint(EndPointAnchor.AUTO_DEFAULT));
+                vertice.addEndPoint(new DotEndPoint(EndPointAnchor.AUTO_DEFAULT));
+                vertice.addEndPoint(new DotEndPoint(EndPointAnchor.AUTO_DEFAULT));
+                vertice.addEndPoint(new DotEndPoint(EndPointAnchor.AUTO_DEFAULT));
+
 
             }
 

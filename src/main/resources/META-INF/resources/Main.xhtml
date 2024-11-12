@@ -156,6 +156,7 @@
                 <h3>Grafos</h3>
             </f:facet>
             <p:commandButton type="button" value="Novo Grafo" icon="pi pi-plus" onclick="PF('dlg').show()" update=":form1:dlg"/>
+            <p:commandButton type="button" value="Exibir Matriz" icon="pi pi-info-circle" onclick="PF('infoDlg').show()" update=":form1:infoDlg"/>
 
             <!-- Diálogo para criar um novo grafo -->
             <p:dialog id="dlg" header="Novo Grafo" widgetVar="dlg" modal="true" width="350">
@@ -211,6 +212,17 @@
             </p:dialog>
 
         </h:form>
+
+        <!-- Diálogo para exibir dados -->
+        <p:dialog id="infoDlg" header="Informações" widgetVar="infoDlg" modal="true" width="500">
+            <h:panelGrid columns="1" style="padding:10px">
+                <!-- Campo de texto somente leitura -->
+                <p:inputTextarea value="#{graphView.largeTextData}" rows="10" cols="50" readonly="true" style="width: 100%;"/>
+
+                <!-- Botão de fechar -->
+                <p:commandButton value="Fechar" onclick="PF('infoDlg').hide()" process="@this"/>
+            </h:panelGrid>
+        </p:dialog>
 
     </h:form>
 

@@ -23,6 +23,15 @@ public class GrafoDirecionado {
         	arestas.add(new ArrayList<>());
         }
     }
+    public int calcularGrauEntrada(int vertice) {
+        int grauEntrada = 0;
+        for (List<Integer> adjacencias : arestas) {
+            if (adjacencias.contains(vertice)) {
+                grauEntrada++;
+            }
+        }
+        return grauEntrada;
+    }
 
     // Método para adicionar uma aresta direcionada de origem para destino
     public void adicionarAresta(int origem, int destino) {
@@ -40,7 +49,27 @@ public class GrafoDirecionado {
         }
     }
 
-	public static void main(String[] args) {
+    public String gerarMatrizDeConexoes() {
+        int[][] matriz = new int[vertices][vertices];
+
+        for (int i = 0; i < vertices; i++) {
+            for (int destino : arestas.get(i)) {
+                matriz[i][destino] = 1;
+            }
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < vertices; i++) {
+            for (int j = 0; j < vertices; j++) {
+                sb.append(matriz[i][j]).append(" ");
+            }
+            sb.append("\n");
+        }
+
+        return sb.toString();
+    }
+
+    public static void main(String[] args) {
 	    Scanner scanner = new Scanner(System.in);
 	
 	    // Leitura do número de vértices (tamanho da matriz)
