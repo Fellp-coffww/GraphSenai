@@ -16,8 +16,8 @@ public class GrafoNaoDirecionado {
     }
 
     // Método para adicionar uma aresta entre dois vértices
-    public void adicionarAresta(int origem, int destino) {
-        matrizAdjacencia[origem][destino] = 1;
+    public void adicionarAresta(int origem, int destino, int peso) {
+        matrizAdjacencia[origem][destino] = peso;
         //matrizAdjacencia[destino][origem] = 1; // Aresta para grafo não direcionado
     }
 
@@ -30,6 +30,27 @@ public class GrafoNaoDirecionado {
             }
             System.out.println();
         }
+    }
+
+    public String getMatrizAdjacenciaBiuld() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < numVertices; i++) {
+            for (int j = 0; j < numVertices; j++) {
+                sb.append(matrizAdjacencia[i][j]).append(" ");
+            }
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
+
+    public int calcularGrauVertice(int vertice) {
+        int grau = 0;
+        for (int i = 0; i < numVertices; i++) {
+            if (matrizAdjacencia[vertice][i] != 0) {
+                grau++;
+            }
+        }
+        return grau;
     }
 
     // Método para exibir o grafo com as arestas
@@ -49,10 +70,10 @@ public class GrafoNaoDirecionado {
         GrafoNaoDirecionado grafo = new GrafoNaoDirecionado(5);
 
         // Adiciona algumas arestas
-        grafo.adicionarAresta(0, 1);
-        grafo.adicionarAresta(0, 2);
-        grafo.adicionarAresta(1, 3);
-        grafo.adicionarAresta(2, 4);
+        grafo.adicionarAresta(0, 1,1);
+        grafo.adicionarAresta(0, 2,1);
+        grafo.adicionarAresta(1, 3,1);
+        grafo.adicionarAresta(2, 4,1);
 
         // Mostra a matriz de adjacências e as conexões do grafo
         grafo.mostrarMatrizAdjacencias();

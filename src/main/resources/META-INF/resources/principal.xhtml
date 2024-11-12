@@ -155,9 +155,12 @@
             <f:facet name="title">
                 <h3>Grafos</h3>
             </f:facet>
-            <p:commandButton type="button" value="Novo Grafo" icon="pi pi-plus" onclick="PF('dlg').show()" update=":form1:dlg"/>
-            <p:commandButton type="button" value="Exibir Matriz" icon="pi pi-info-circle" onclick="PF('infoDlg').show()" update=":form1:infoDlg"/>
-
+            <div>
+                <p:commandButton type="button" value="Novo Grafo" icon="pi pi-plus" onclick="PF('dlg').show()" update=":form1:dlg" style="margin: 10px;"/>
+            </div>
+            <div>
+            <p:commandButton type="button" value="Exibir Matriz" icon="pi pi-info-circle" onclick="PF('infoDlg').show()" update=":form1:infoDlg" style="margin: 10px;"/>
+            </div>
             <!-- Diálogo para criar um novo grafo -->
             <p:dialog id="dlg" header="Novo Grafo" widgetVar="dlg" modal="true" width="350">
                 <h:panelGrid columns="1" style="padding:10px">
@@ -202,8 +205,16 @@
             <p:dialog header="Lista de Vértices" widgetVar="vtc" modal="true" id="vtc" >
                 <div style="height: 250px">
                     <h5>Vértice Selecionado: #{graphView.verticeSelecionado.data}</h5>
+                    <h5>Grau do vertice: #{graphView.grauAtual}</h5>
+                    <div>
+                        <h5>Peso da aresta: </h5>
+                        <p:inputNumber id="peso" value="#{graphView.pesoVertice}" required="false" label="Peso aresta" style="margin-top: 10px;">
+                            <p:keyFilter mask="num"/>
+                        </p:inputNumber>
+                        
+                    </div>
                     <h:outputLabel for="btnSelect" value="Adicionar conexão: "/>
-                    <p:selectOneMenu id="btnSelect" value="#{graphView.verticeDestino}">
+                    <p:selectOneMenu id="btnSelect" value="#{graphView.verticeDestino}" style="margin-top: 10px;">
                         <f:selectItems value="#{graphView.buttons}" />
                     </p:selectOneMenu>
                 </div>
@@ -217,7 +228,7 @@
         <p:dialog id="infoDlg" header="Informações" widgetVar="infoDlg" modal="true" width="500">
             <h:panelGrid columns="1" style="padding:10px">
                 <!-- Campo de texto somente leitura -->
-                <p:inputTextarea value="#{graphView.largeTextData}" rows="10" cols="50" readonly="true" style="width: 100%;"/>
+                <p:inputTextarea value="#{graphView.largeTextData}" rows="10" cols="50" readonly="true" class="output"  style="width: 100%;"/>
 
                 <!-- Botão de fechar -->
                 <p:commandButton value="Fechar" onclick="PF('infoDlg').hide()" process="@this"/>

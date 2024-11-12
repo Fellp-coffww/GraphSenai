@@ -29,4 +29,37 @@ public class Graph {
             }
         }
     }
+
+    public String getMatrizAdjacencia() {
+        int numVertices = edgesList.size();
+        int[][] matrizAdjacencia = new int[numVertices][numVertices];
+
+        // Inicializa a matriz com zeros (ou outro valor para representar ausência de aresta)
+        for (int i = 0; i < numVertices; i++) {
+            for (int j = 0; j < numVertices; j++) {
+                matrizAdjacencia[i][j] = 0;
+            }
+        }
+
+        // Preenche a matriz com os pesos das arestas
+        for (int i = 0; i < numVertices; i++) {
+            for (Edge edge : edgesList.get(i)) {
+                matrizAdjacencia[edge.source][edge.destination] = edge.weight;
+            }
+        }
+
+        // Constrói a string da matriz
+        StringBuilder sb = new StringBuilder("Matriz de Adjacência:\n");
+        for (int i = 0; i < numVertices; i++) {
+            for (int j = 0; j < numVertices; j++) {
+                sb.append(matrizAdjacencia[i][j]).append(" ");
+            }
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
+
+    public int calcularGrauVertice(int vertice) {
+        return edgesList.get(vertice).size();
+    }
 }
