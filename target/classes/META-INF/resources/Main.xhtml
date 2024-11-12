@@ -3,10 +3,11 @@
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
-    <title>Inicio</title>
+    <title>Aplicação de Grafos</title>
     <style>
         body {
             margin: 0;
@@ -123,38 +124,95 @@
             margin-bottom: 10px;
             color: #333;
         }
+        .ui-diagram-element {
+            width: 5em;
+            height: 5em;
+            line-height: 5em;
+            text-align: center;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+            border-radius: 5em;
+            border: 1px solid #404a4e;
+            background-color: #404a4e;
+            color: #cccccc;
+            user-select: none;
+        }
+
+        .ui-diagram-element:hover {
+            background-color: #20282b;
+        }
     </style>
 </h:head>
 
 <h:body>
-
-<div>
-
     <!-- Menu Superior -->
     <div class="menu-bar">
-        Aplicação de árvore - Estrutura de dados 2 - JELF Dynamics
+        Aplicação de Grafos - Estrutura de dados 2 - JF Dynamics
     </div>
 
     <!-- Cartão com informações da árvore -->
-    <p:card class="ui-card" style="width: 30rem; margin: 20px auto;">
-        <f:facet name="title">
-            <h3>Informações da árvore</h3>
-        </f:facet>
-        <p> Tamanho da árvore: #{TreeView.treeSize}</p>
-        <p> Quantidade de nós folhas: #{TreeView.leafNodes}</p>
-        <p> Quantidade de nós não folhas: #{TreeView.nonLeafNodes}</p>
-        <p> Grau da árvore: #{TreeView.degree}</p>
-    </p:card>
+    <h:form id="form1">
+        <p:card class="ui-card">
+            <f:facet name="title">
+                <h3>Grafos</h3>
+            </f:facet>
+            <p:commandButton type="button" value="Novo Grafo" icon="pi pi-plus" onclick="PF('dlg').show()" update=":form1:dlg"/>
 
-    <!-- Conteúdo principal -->
-    <div class="content">
-        <h:form>
-            <!-- Diagrama da árvore -->
-            <p:diagram value="#{TreeView.model}" style="height:800px" styleClass="ui-widget-content" />
+            <!-- Diálogo para criar um novo grafo -->
+            <p:dialog id="dlg" header="Novo Grafo" widgetVar="dlg" modal="true" width="350">
+                <h:panelGrid columns="1" style="padding:10px">
+                    <p:outputLabel value="Qtd. Vértices:" for="vertices"/>
+                    <p:inputNumber id="vertices" value="#{graphView.qtdVertices}" required="true" label="Qtd. Vértices">
+                        <p:keyFilter mask="num"/>
+                    </p:inputNumber>
+
+                    <p:selectBooleanCheckbox id="direcionado" value="#{graphView.direcionado}"
+                                             itemLabel="Grafo direcionado"/>
+                    <p:selectBooleanCheckbox id="comPeso" value="#{graphView.comPeso}"
+                                             itemLabel="Grafo com peso"/>
+
+                    <h:panelGrid columns="2" style="margin-top: 20px">
+                        <p:commandButton value="Cancelar" onclick="PF('dlg').hide()" process="@this"/>
+                        <p:commandButton value="Gerar Grafo" icon="pi pi-check"
+                                         action="#{graphView.actionBotaoNewGraph()}"
+                                         update=":form2:diagram"
+                                         oncomplete="PF('dlg').hide()" type="submit"/>
+                    </h:panelGrid>
+                </h:panelGrid>
+            </p:dialog>
+        </p:card>
+    </h:form>
+
+    <h:form id="form2">
+        <p:outputPanel id="diagram" style="padding-top: 20px">
+            <p:diagram value="#{graphView.model}" style="height:800px" styleClass="ui-widget-content">
+                <!-- Renderizando elementos do modelo de diagrama -->
+                <ui:repeat var="vertice" value="#{graphView.model.elements}">
+                    <p:commandLink value="#{vertice.data}"
+                                   action="#{graphView.selecionarVertice(vertice)}"
+                                   update=":form2:vtcDialog"
+                                   style="margin: 10px; color: blue; text-decoration: underline;">
+                    </p:commandLink>
+                </ui:repeat>
+            </p:diagram>
+        </p:outputPanel>
+
+        <h:form id="vtcDialog">
+
+            <p:dialog header="Lista de Vértices" widgetVar="vtc" modal="true" id="vtc" >
+                <div style="height: 250px">
+                    <h5>Vértice Selecionado: #{graphView.verticeSelecionado.data}</h5>
+                    <h:outputLabel for="btnSelect" value="Adicionar conexão: "/>
+                    <p:selectOneMenu id="btnSelect" value="#{graphView.verticeDestino}">
+                        <f:selectItems value="#{graphView.buttons}" />
+                    </p:selectOneMenu>
+                </div>
+                <h:commandButton value="Salvar" icon="pi pi-check" iconPos="right"
+                                 actionListener="#{graphView.addConnection}" type="submit" />
+            </p:dialog>
 
         </h:form>
-    </div>
-</div>
+
+    </h:form>
 
 </h:body>
 </html>
