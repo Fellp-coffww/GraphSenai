@@ -1,5 +1,5 @@
 # GraphSenai
-Trabalho de Estrutura de dados 2
+Trabalho de Estrutura de dados 2 - Prova N2
 
 # Alunos
-Fellipe Augusto e José Mauro
+Alexandre Santos, Fellipe Augusto e José Mauro
